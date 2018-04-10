@@ -9,7 +9,6 @@ class Calculator extends Component {
             display: '0',
             operator: '',
             temp: 0,
-            resetDisplay: false,
             justCalculated: false,
         };
     }
@@ -19,34 +18,28 @@ class Calculator extends Component {
     }
 
     setDisplay(num){
-        if (this.state.display === '0'){
+        if (this.state.display === '0' || this.state.justCalculated){ // if zero or we just calculated something
             this.setState({display: num});
-            this.setState({justCalculated: false});
-        } else if (this.state.justCalculated) { // if we just calculated something
-            this.setState({display: num});
-            this.setState({justCalculated: false});
-        }
-        else{
+            this.setState({justCalculated: false}); // so we don't loop
+        } else{
             this.setState({display: this.state.display += num});
         }
     }
 
-    clearDisplay(){
+    clearDisplay(){ // sets everything to initial values
         this.setState({
             display: '0',
             operator: '',
             temp: 0,
-            resetDisplay: false,
             justCalculated: false,
         });
     }
 
     setOperator(operator){
-        if (!this.state.operator /*|| this.state.resetDisplay*/){
+        if (!this.state.operator){
             this.setState({temp: parseInt(this.state.display)});
             this.setState({display: '0'});
             this.setState({operator: operator});
-            //this.setState({resetDisplay: false});
         }
     }
 
