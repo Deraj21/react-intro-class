@@ -21,7 +21,7 @@ class Calculator extends Component {
         if (this.state.display === '0' || this.state.justCalculated){ // if zero or we just calculated something
             this.setState({display: num});
             this.setState({justCalculated: false}); // so we don't loop
-        } else{
+        } else if (this.state.display.length < 13){
             this.setState({display: this.state.display += num});
         }
     }
@@ -63,7 +63,9 @@ class Calculator extends Component {
             result = this.state.temp / parseInt(this.state.display);
             break;
         }
-        this.setState({display: result});
+        let stringResult = result.toString();
+        stringResult = stringResult.substring(0, 13);
+        this.setState({display: stringResult});
         this.setState({justCalculated: true});
         this.setState({operator: ''});
     }
